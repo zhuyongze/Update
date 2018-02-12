@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="gray">#c4bfc1</color>
+    <color name="white">#FFFFFF</color>
+    <color name="red">#ff0000</color>
+    <color name="circle_color">#323a45</color>
+    <color name="ring_color">#14b9d6</color>
+    <color name="backgroundColor">#E8E8E0</color>
+    <color name="backgroundColorPress">#FFFAF0</color>
+    <color name="green">#65b35f</color>
+    <color name="green_color">#b4d76b</color>
+    <color name="green_high">#00ff01</color>
+    <color name="graytwo">#c0c0c0</color>
+    <color name="black">#000000</color>
+    <color name="grey">#D3D2D2</color>
+    <color name="black_bg">#3b5974</color>
+    <color name="heihui">#F2F2F2</color>
+    <color name="greentwo">#55bd92</color>
+    <!-- 白色半透明背景色 -->
+    <color name="edit_bg_transpant">#E6FFFFFF</color>
+    <!-- 透明背景色 -->
+    <color name="bg_transpant">#00FFFFFF</color>
+    <!-- 半透明背景色 -->
+    <color name="edit_white_transpant">#90FFFFFF</color>
+    <!-- 半透明背景色 -->
+    <color name="edit_black_transpant">#60000000</color>
+    <color name="blue">#3e7cee</color>
+
+    <!-- dialog-->
+    <color name="loading_color">#444444</color>
+
+</resources>

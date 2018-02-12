@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:gravity="center"
+              android:orientation="vertical">
+
+
+
+
+    <LinearLayout
+        android:id="@+id/progress_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <RelativeLayout
+            android:id="@+id/top_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ctsig.updatehelper.dialog.DoughnutProgress
+                android:id="@+id/doughnutProgress"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingTop="5dp"
+                android:text="@string/loading"
+                android:textColor="@color/loading_color"
+                android:textSize="8sp"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_content_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/top_layout"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/top_layout"
+            android:gravity="center"
+            android:text="@string/loading_content"
+            android:textColor="@color/loading_color"
+            android:textSize="14sp"
+
+            />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/simple_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/view"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Title"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+
+                />
+
+            <EditText
+                android:maxLength="15"
+                android:id="@+id/et_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:background="@drawable/boxshapeblack"
+                android:hint="请输入新名称"
+                android:padding="@dimen/margin_small"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_normal"
+
+                />
+
+
+            <TextView
+                android:id="@+id/content_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_small"
+                android:gravity="center"
+                android:text="所放松放松"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+
+            <ListView
+                android:id="@+id/lv_room"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_middle"
+                android:layout_marginRight="@dimen/margin_middle"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:divider="@null"
+                android:scrollbars="none"
+                android:visibility="gone"
+                >
+
+
+            </ListView>
+
+            <RadioGroup
+                android:id="@+id/rgp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+
+                <RadioButton
+
+                    android:id="@+id/rb_alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="有人报警"/>
+
+
+                <RadioButton
+                    android:id="@+id/rb_no_alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_large_60"
+                    android:text="正常"/>
+
+
+            </RadioGroup>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_alarm_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:visibility="gone"
+                    />
+
+                <CheckBox
+                    android:id="@+id/cb_alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/confirm_button"
+                style="@style/dialog_white_button"
+                android:text="@string/dialog_confirm_dp"
+                android:visibility="gone"
+
+                />
+
+            <View
+                android:id="@+id/white_space"
+                android:layout_width="1dp"
+                android:layout_height="45dp"
+                android:background="@color/edit_black_transpant"
+                android:visibility="gone"
+                />
+
+            <Button
+                android:id="@+id/cancel_button"
+                style="@style/dialog_white_button"
+
+                android:text="@string/dialog_back_dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@id/bottom_layout"
+            android:background="@color/edit_black_transpant"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">UpdateHelper</string>
+
+
+    <string name="notice_download_over">任务下载完成</string>
+    <string name="notice_click_install">下载完成，点击安装</string>
+    <string name="content_download_tips_new">当前不是wifi环境\n请确认是否继续下载？</string>
+    <string name="content_download_alert">当前不是最新版，\n请下载最新版本以便使用。</string>
+    <string name="tv_tip_apply_write_external_storage">"软件"需要使用存储权限，您可在\n"设置">"应用">"权限"中配置权限</string>
+
+    <!-- dialog-->
+    <string name="title_give_up">您填写的用户账号或密码不正确</string>
+    <string name="loading_content">系统处理中，请稍候</string>
+    <string name="loading">Loading...</string>
+    <string name="dialog_confirm_dp">是</string>
+    <string name="dialog_back_dp">返 回</string>
+    <string name="dialog_cancel_dp">否</string>
+    <string name="dialog_ethint">请输入</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="help">帮助</string>
+    <string name="setting_title">设置</string>
+    <string name="string_help_text">当前应用缺少必要权限.请点击"设置"-"权限"-打开所需权限.</string>
+
+</resources>
