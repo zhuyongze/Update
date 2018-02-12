@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 UpdateHelper updateHelper = new UpdateHelper.Builder(MainActivity.this)
-                        .checkUrl("https://app.ctsig.com/appcms/api/app/checkVersion/","documentsShareCTG", 1, 1,R.drawable.logo)
+                        .checkUrl("https://app.ctsig.com/appcms/api/app/checkVersion/","documentsShareCTG", 1, 1)
                         .isAutoInstall(true) //设置为false需在下载完手动点击安装;默认值为true，下载后自动安装。
                         .isHintNewVersion(false)
                         .build();
