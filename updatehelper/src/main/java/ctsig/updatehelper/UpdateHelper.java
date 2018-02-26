@@ -328,17 +328,17 @@ public class UpdateHelper {
                         .getSystemService(Context.NOTIFICATION_SERVICE);
             }
             if (ntfBuilder == null) {
-                if (mIcon == 0) {
-                    mIcon = R.drawable.ic_launcher;
-
-                }
+//                if (mIcon == 0) {
+//                    mIcon = R.drawable.ic_launcher;
+//
+//                }
                 ntfBuilder = new NotificationCompat.Builder(mContext)
                         .setSmallIcon(mIcon)
                         .setTicker("开始下载...")
                         .setContentTitle(updateInfo.getAppName())
                         .setContentIntent(contentIntent);
                 L.d("图片地址", mContext.getResources().getDrawable(mIcon) + "");
-//
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     L.d("sssss");
                     ntfBuilder.setLargeIcon(PictureUtils.drawable2Bitmap(mContext.getResources().getDrawable(mIcon, null)));
