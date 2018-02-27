@@ -1,13 +1,18 @@
 package ctsig.update;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +20,7 @@ import android.widget.Button;
 
 import ctsig.updatehelper.Main2Activity;
 import ctsig.updatehelper.UpdateHelper;
+import ctsig.updatehelper.dialog.MultipleDialog;
 import ctsig.updatehelper.listener.OnUpdateListener;
 import ctsig.updatehelper.pojo.UpdateInfo;
 import ctsig.updatehelper.utils.L;
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private NotificationManager notificationManager;
     private NotificationCompat.Builder ntfBuilder;
     private static final int DOWNLOAD_NOTIFICATION_ID = 0x4;
+    private NotificationCompat.Builder notification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,26 +40,54 @@ public class MainActivity extends AppCompatActivity {
         mBtnUpdate = findViewById(R.id.btn_update);
 
         mBtnUpdate.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                NotificationManager manager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-//                Notification notification=new NotificationCompat.Builder(MainActivity.this)
+//                NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//                notification = new NotificationCompat.Builder(MainActivity.this)
 //                        .setContentTitle("这是头部")
 //                        .setContentText("这是内容")
-//                        .setSmallIcon(R.drawable.logo)
-//                        .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.icon_me))
-//                        .build();
-//                manager.notify(1,notification);
+//                        .setSmallIcon(R.drawable.logo);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    notification.setLargeIcon(PictureUtils.drawable2Bitmap(getResources().getDrawable(R.mipmap.ic_logo_new, null)));
+//                } else {
+//                    notification.setLargeIcon(PictureUtils.drawable2Bitmap(getResources().getDrawable(R.mipmap.ic_logo_new)));
+//                }
+//
+//
+//                manager.notify(1, notification.build());
 
 
 
-
-                UpdateHelper updateHelper = new UpdateHelper.Builder(MainActivity.this)
-                        .checkUrl("https://app.ctsig.com/appcms/api/app/checkVersion/","documentsShareCTG", 1, 1)
+                final UpdateHelper updateHelper = new UpdateHelper.Builder(MainActivity.this)
+                        .checkUrl("https://app.ctsig.com/appcms/api/app/checkVersion/", "documentsShareCTG", 1, 1)
                         .isAutoInstall(true) //设置为false需在下载完手动点击安装;默认值为true，下载后自动安装。
-                        .setIcon(R.drawable.logo)
+                        .setSmallIcon(R.drawable.logo)
+                        .setBigIcon(R.mipmap.ic_logo_new)
                         .build();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("title")
+                        .setMessage("message")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                updateHelper.downlaod();
+
+
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        });
+                builder.create();
+
+
+               updateHelper.setDialog(builder.create());
+
                 updateHelper.check();
                 //自定义进度监听
 //                updateHelper.check(new OnUpdateListener() {

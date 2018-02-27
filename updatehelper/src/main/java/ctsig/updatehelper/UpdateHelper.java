@@ -2,6 +2,7 @@ package ctsig.updatehelper;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -77,7 +78,8 @@ public class UpdateHelper {
     private String checkUrl;
     private boolean isAutoInstall;
     private boolean isHintVersion;
-    private int mIcon;
+    private int mSmallIcon;
+    private int mBigIcon;
 
     private String projectName;
     private int type;
@@ -95,6 +97,10 @@ public class UpdateHelper {
     private static final String SUFFIX = ".apk";
     private static final String APK_PATH = "APK_PATH";
     private static final String APP_NAME = "APP_NAME";
+
+    private Dialog mDialogUi;
+
+    private UpdateInfo mInfo;
 //	private SharedPreferences preferences_update;
 
     //提示框
@@ -146,7 +152,8 @@ public class UpdateHelper {
         this.checkUrl = builder.checkUrl + "?" + "projectName=" + builder.projectName + "&" + "type=" + builder.type + "&" + "deviceId=" + builder.deviceId;
         this.isAutoInstall = builder.isAutoInstall;
         this.isHintVersion = builder.isHintNewVersion;
-        this.mIcon = builder.icon;
+        this.mSmallIcon = builder.smallicon;
+        this.mBigIcon = builder.bigicon;
         //初始化弹出框
         mDialog = new MultipleDialog((Activity) mContext, 4);
 //		preferences_update = mContext.getSharedPreferences("Updater",
@@ -188,6 +195,19 @@ public class UpdateHelper {
             return;
         }
     }
+
+    //用户自定义Dialog样式
+    public void setDialog(Dialog dialog) {
+        this.mDialogUi = dialog;
+    }
+
+    // 自定义Dialog 确定按钮开始下载
+    public void downlaod() {
+        Log.d("自定义下载", "123");
+        AsyncDownLoad asyncDownLoad = new AsyncDownLoad();
+        asyncDownLoad.execute(mInfo);
+    }
+
 
     /**
      * 2014-10-27新增流量提示框，当网络为数据流量方式时，下载就会弹出此对话框提示
@@ -328,23 +348,26 @@ public class UpdateHelper {
                         .getSystemService(Context.NOTIFICATION_SERVICE);
             }
             if (ntfBuilder == null) {
-//                if (mIcon == 0) {
-//                    mIcon = R.drawable.ic_launcher;
-//
-//                }
+                if (mSmallIcon == 0) {
+                    mSmallIcon = R.drawable.ic_launcher;
+
+                }
+                if (mBigIcon == 0) {
+                    mBigIcon = R.drawable.ic_launcher;
+
+                }
                 ntfBuilder = new NotificationCompat.Builder(mContext)
-                        .setSmallIcon(mIcon)
+                        .setSmallIcon(mSmallIcon)
                         .setTicker("开始下载...")
                         .setContentTitle(updateInfo.getAppName())
                         .setContentIntent(contentIntent);
-                L.d("图片地址", mContext.getResources().getDrawable(mIcon) + "");
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     L.d("sssss");
-                    ntfBuilder.setLargeIcon(PictureUtils.drawable2Bitmap(mContext.getResources().getDrawable(mIcon, null)));
+                    ntfBuilder.setLargeIcon(PictureUtils.drawable2Bitmap(mContext.getResources().getDrawable(mBigIcon, null)));
                 } else {
                     L.d("000000");
-                    ntfBuilder.setLargeIcon(PictureUtils.drawable2Bitmap(mContext.getResources().getDrawable(mIcon)));
+                    ntfBuilder.setLargeIcon(PictureUtils.drawable2Bitmap(mContext.getResources().getDrawable(mBigIcon)));
                 }
             }
             ntfBuilder.setContentText(contentText);
@@ -400,6 +423,7 @@ public class UpdateHelper {
                 return null;
             }
             try {
+                //解析返回数据
                 updateInfo = JSONHandler.toUpdateInfo(HttpRequest.get(url));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -411,17 +435,24 @@ public class UpdateHelper {
         @Override
         protected void onPostExecute(UpdateInfo updateInfo) {
             super.onPostExecute(updateInfo);
+            mInfo = updateInfo;
 //			SharedPreferences.Editor editor = preferences_update.edit();
             if (mContext != null && updateInfo != null) {
                 //getPackageInfo().versionCode
                 if (Integer.parseInt(updateInfo.getVersionCode()) > 10000) {
-                    //ForceUpgrade=true 强制更新
-                    if (updateInfo.isForceUpgrade()) {
-                        showUpdateTrue(updateInfo);
-
+                    if (mDialogUi != null) {
+                        mDialogUi.show();
                     } else {
-                        showUpdateUI(updateInfo);
+                        //ForceUpgrade=true 强制更新
+                        if (updateInfo.isForceUpgrade()) {
 
+
+                            showUpdateTrue(updateInfo);
+
+                        } else {
+                            showUpdateUI(updateInfo);
+
+                        }
                     }
 
 
@@ -553,7 +584,8 @@ public class UpdateHelper {
         private Context context;
         private String checkUrl;
         private String projectName;
-        private int icon;
+        private int smallicon;
+        private int bigicon;
         private int type;
         private int deviceId;
         private boolean isAutoInstall = true;
@@ -587,9 +619,13 @@ public class UpdateHelper {
         * */
 
 
+        public Builder setSmallIcon(int icon) {
+            this.smallicon = icon;
+            return this;
+        }
 
-        public Builder setIcon(int icon) {
-            this.icon = icon;
+        public Builder setBigIcon(int icon) {
+            this.bigicon = icon;
             return this;
         }
 
