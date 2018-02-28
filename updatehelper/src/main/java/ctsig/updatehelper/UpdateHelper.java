@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -21,24 +20,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-
-import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import ctsig.updatehelper.dialog.MultipleDialog;
 import ctsig.updatehelper.listener.OnUpdateListener;
 import ctsig.updatehelper.pojo.CheckVersion;
 import ctsig.updatehelper.pojo.UpdateInfo;
-import ctsig.updatehelper.utils.HttpClientUtils;
 import ctsig.updatehelper.utils.HttpRequest;
 import ctsig.updatehelper.utils.JSONHandler;
 import ctsig.updatehelper.utils.L;
@@ -203,7 +194,6 @@ public class UpdateHelper {
 
     // 自定义Dialog 确定按钮开始下载
     public void downlaod() {
-        Log.d("自定义下载", "123");
         AsyncDownLoad asyncDownLoad = new AsyncDownLoad();
         asyncDownLoad.execute(mInfo);
     }
@@ -439,7 +429,7 @@ public class UpdateHelper {
 //			SharedPreferences.Editor editor = preferences_update.edit();
             if (mContext != null && updateInfo != null) {
                 //getPackageInfo().versionCode
-                if (Integer.parseInt(updateInfo.getVersionCode()) > 10000) {
+                if (Integer.parseInt(updateInfo.getVersionCode()) > getPackageInfo().versionCode) {
                     if (mDialogUi != null) {
                         mDialogUi.show();
                     } else {
@@ -455,12 +445,6 @@ public class UpdateHelper {
                         }
                     }
 
-
-//					editor.putBoolean("hasNewVersion", true);
-//					editor.putString("lastestVersionCode",
-//							updateInfo.getVersionCode());
-//					editor.putString("lastestVersionName",
-//							updateInfo.getVersionName());
                 } else {
                     if (isHintVersion) {
                         Toast.makeText(mContext, "当前已是最新版", Toast.LENGTH_LONG).show();
@@ -478,10 +462,7 @@ public class UpdateHelper {
                     UpdateHelper.this.updateListener.onFinishCheck(updateInfo);
                 }
             }
-//			editor.putString("currentVersionCode", getPackageInfo().versionCode
-//					+ "");
-//			editor.putString("currentVersionName", getPackageInfo().versionName);
-//			editor.commit();
+
         }
     }
 

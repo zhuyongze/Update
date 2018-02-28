@@ -1,36 +1,23 @@
 package ctsig.update;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import ctsig.updatehelper.Main2Activity;
 import ctsig.updatehelper.UpdateHelper;
-import ctsig.updatehelper.dialog.MultipleDialog;
-import ctsig.updatehelper.listener.OnUpdateListener;
-import ctsig.updatehelper.pojo.UpdateInfo;
-import ctsig.updatehelper.utils.L;
 import ctsig.updatehelper.utils.PictureUtils;
 
 public class MainActivity extends AppCompatActivity {
     private Button mBtnUpdate;
-    private NotificationManager notificationManager;
-    private NotificationCompat.Builder ntfBuilder;
-    private static final int DOWNLOAD_NOTIFICATION_ID = 0x4;
     private NotificationCompat.Builder notification;
 
     @Override
@@ -43,53 +30,48 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-//                NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//                notification = new NotificationCompat.Builder(MainActivity.this)
-//                        .setContentTitle("这是头部")
-//                        .setContentText("这是内容")
-//                        .setSmallIcon(R.drawable.logo);
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                    notification.setLargeIcon(PictureUtils.drawable2Bitmap(getResources().getDrawable(R.mipmap.ic_logo_new, null)));
-//                } else {
-//                    notification.setLargeIcon(PictureUtils.drawable2Bitmap(getResources().getDrawable(R.mipmap.ic_logo_new)));
-//                }
-//
-//
-//                manager.notify(1, notification.build());
 
 
-
-                final UpdateHelper updateHelper = new UpdateHelper.Builder(MainActivity.this)
+                UpdateHelper updateHelper = new UpdateHelper.Builder(MainActivity.this)
+                        //填写版本检测url地址  项目名称  type 及设备id
                         .checkUrl("https://app.ctsig.com/appcms/api/app/checkVersion/", "documentsShareCTG", 1, 1)
-                        .isAutoInstall(true) //设置为false需在下载完手动点击安装;默认值为true，下载后自动安装。
+                        //设置为false需在下载完手动点击安装;默认值为true，下载后自动安装。
+                        .isAutoInstall(true)
+                        //当没有新版本时，是否Toast提示
+                        .isHintNewVersion(false)
+                        //设置小图标
                         .setSmallIcon(R.drawable.logo)
+                        //设置下拉后大图标
                         .setBigIcon(R.mipmap.ic_logo_new)
                         .build();
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("title")
-                        .setMessage("message")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
 
-                                updateHelper.downlaod();
+                //自定义Dialog 提示更新, 并调用 updateHelper.downlaod(); 进行下载.
 
-
-                            }
-                        })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                            }
-                        });
-                builder.create();
-
-
-               updateHelper.setDialog(builder.create());
-
+//                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//                builder.setTitle("title")
+//                        .setMessage("message")
+//                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//
+//                                updateHelper.downlaod();
+//
+//
+//                            }
+//                        })
+//                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//
+//                            }
+//                        });
+//                builder.create();
+//                updateHelper.setDialog(Dialog);
+//
+               // 检查app是否有新版本，check之前先Builer所需参数
                 updateHelper.check();
-                //自定义进度监听
+
+
+                //如果要自定义下载进度条,实现此接口
 //                updateHelper.check(new OnUpdateListener() {
 //                    @Override
 //                    public void onStartCheck() {
