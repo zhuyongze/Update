@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
                         //设置小图标
                         .setSmallIcon(R.drawable.logo)
                         //设置下拉后大图标
+                        
+                        
+                        
                         .setBigIcon(R.mipmap.ic_logo_new)
                         .build();
 
